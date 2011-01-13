@@ -69,6 +69,7 @@ function(req, res) {
 });
 
 app.get('/components/:componentId', componentsController.index);
+app.post('/components', componentsController.indexPost);
 
 // Only listen on $ node app.js
 if (!module.parent) {

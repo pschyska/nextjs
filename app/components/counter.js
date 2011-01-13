@@ -1,8 +1,9 @@
+var Counter;
 __extends(Counter, Component);
 function Counter(name) {
     Counter.__super__.constructor.call(this, name, this.endpoints);
     this.counter = 0;
-};
+}
 
 Counter.prototype.clientBaseClass = function() {
     return "Ext.Panel";
@@ -10,12 +11,12 @@ Counter.prototype.clientBaseClass = function() {
 
 Counter.prototype.endpoints = {
     count: function(howMany) {
-        if (howMany == null) {
+        if (!howMany) {
             howMany = 1;
         }
         this.counter += howMany;
         return function() {
-            return this.widget.setTitle('The servers says the counter says its at ' + $counter);
+            return this.setTitle('The servers says the counter says its at ' + $counter);
         };
     }
 };
@@ -30,7 +31,6 @@ Counter.prototype.clientConfig = function() {
             xtype: 'button',
             text: 'Click me, please',
             handler: function() {
-                console.log(this);
                 return this.ownerCt.someEndpointFunction();
             }
         }
