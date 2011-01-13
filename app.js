@@ -14,7 +14,7 @@ __extends = function(child, parent) {
         this.constructor = child;
     }
     ctor.prototype = parent.prototype;
-    child.prototype = new ctor;
+    child.prototype = new ctor();
     child.__super__ = parent.prototype;
 
     return child;

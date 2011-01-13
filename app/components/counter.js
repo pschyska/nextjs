@@ -30,7 +30,8 @@ Counter.prototype.clientConfig = function() {
             xtype: 'button',
             text: 'Click me, please',
             handler: function() {
-                return client.someEndpointFunction();
+                console.log(this);
+                return this.ownerCt.someEndpointFunction();
             }
         }
         ]
