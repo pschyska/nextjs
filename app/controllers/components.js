@@ -15,7 +15,7 @@ module.exports = {
       var result="";
       if (componentInstance) {
         // call the function specified in method and pass the data specified in data
-        result=componentInstance.endpoints[method](data).toString();
+        result=componentInstance.endpoints[method].apply(componentInstance, data).toString();
       }
       serverExpansion = /\$[a-zA-Z0-9]*/;
       expansion = result.match(serverExpansion);
