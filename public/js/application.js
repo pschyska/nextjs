@@ -3,9 +3,9 @@ Ext.onReady(function() {
       if(event.name == "rpcResult") {
         var targetComponent=NextJs.components[event.getData().comp];
         var fun=eval('('+event.getData().code+');');
-        console.log(targetComponent);
         fun.apply(targetComponent);
       }
     });
     NextJs.components.someCounter.render('container');
+    NextJs.components.anotherCounter.render('container2');
 });

@@ -29,7 +29,9 @@ Component = require('./lib/component');
 
 // Test component
 Counter = require('./app/components/counter');
+SubCounter = require('./app/components/sub_counter');
 var counter = new Counter('some counter');
+var subCounter = new SubCounter('anotherCounter');
 
 // Controllers
 var componentsController = require('./app/controllers/components');
@@ -47,10 +49,12 @@ app.configure(function() {
 
 app.configure('development',
 function() {
-    app.use(express.errorHandler({
+    app.use(express.errorHandler(
+        {
         dumpExceptions: true,
         showStack: true
-    }));
+    }
+    ));
 });
 
 app.configure('production',

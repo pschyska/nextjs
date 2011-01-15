@@ -1,15 +1,11 @@
-module.exports = {
-    index: function(request, response) {
-        response.send(ComponentRegistry.get(request.params.componentId).render());
-    },
-    indexPost: function(request, response) {
-      if(request.body.type != 'rpc') {
-        throw("This request is not a rpc request");
+var processRpc=function (rpc) {
+      if(rpc.type != 'rpc') {
+        throw new Error("This request is not a rpc request");
       }
-      var action = request.body.action;
-      var method = request.body.method;
-      var data = request.body.data;
-      var tid = request.body.tid;
+      var action = rpc.action;
+      var method = rpc.method;
+      var data = rpc.data;
+      var tid = rpc.tid;
       // find the component specified in action
       var componentInstance = ComponentRegistry.get(action);
       var result="";
@@ -31,7 +27,24 @@ module.exports = {
           "code": result
         }
       };
-      response.send(JSON.stringify(resp));
+      return resp;
+};
+
+module.exports = {
+    index: function(request, response) {
+        response.send(ComponentRegistry.get(request.params.componentId).render());
+    },
+    indexPost: function(request, response) {
+      var responses=[];
+      if(request.body instanceof Array) {
+        reqs=request.body;
+        for(var i=0;i<reqs.length;i++) {
+          responses.push(processRpc(reqs[i]));
+        }
+      } else if (request.body instanceof Object) {
+        responses.push(processRpc(request.body));
+      }
+      response.send(JSON.stringify(responses));
     },
     endpoint: function(request, response) {
         var component,
